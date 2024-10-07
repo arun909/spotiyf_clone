@@ -21,15 +21,15 @@ export default function Spotify() {
           } );
     
 
-    const UserInfo = {
+    const userInfo = {
       userId: data.id,
       userName: data.display_name,
       
     };
-    dispatch({ type: reducerCases.SET_USER, UserInfo });
+    console.log(userInfo);
+    dispatch({ type: reducerCases.SET_USER, userInfo });
   };
-
-getUserInfo();
+   getUserInfo();
 
 
   }, [dispatch, token]);
