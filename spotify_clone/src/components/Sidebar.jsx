@@ -2,11 +2,12 @@ import React from 'react'
 import styled from 'styled-components'  
 import{ IoLibrary } from "react-icons/io5";
 import{ MdHomeFilled, MdSearch } from "react-icons/md";
-import Playlist from './Playlist';
+import Playlists from './Playlists';
 
 
 export default function m() {
-  return <Container>
+  return ( 
+  <Container>
     <div className='top_links'>
         <div className='logo'>
         <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Full_Logo_RGB_White.png" 
@@ -30,9 +31,9 @@ export default function m() {
     </div>
     
     
-    <Playlist></Playlist>
-    Sidebar</Container>;
-  
+    <Playlists />
+</Container>
+ ); 
 }
 
 const Container = styled.div`
@@ -40,8 +41,8 @@ const Container = styled.div`
   color: #b3b3b3;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   .top_links {
     display: flex;
     flex-direction: column;
