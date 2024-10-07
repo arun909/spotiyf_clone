@@ -4,7 +4,7 @@ import { reducerCases } from "./Constants";
  export const initialState = {
      token: null,
      Playlists: [],
-     
+     userinfo: null,
     };
 const reducer = (state, action) => {
     switch (action.type) {
@@ -18,6 +18,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 playlists: action.playlists,
+            };
+        }
+        case reducerCases.SET_USER :{
+            return {
+                ...state,
+                userinfo: action.userinfo,
             };
         }
         default: 
