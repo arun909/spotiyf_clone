@@ -19,6 +19,6 @@ export default function App() {
   }, [token, dispatch]);
 
   return (
-    <div>{ token ? <Spotify /> : <Login /> }</div>
+    <div> {    token ? <Spotify /> : <Login />   } </div>
   );
 }
