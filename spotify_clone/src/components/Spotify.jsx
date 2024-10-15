@@ -18,6 +18,7 @@ export default function Spotify() {
               Authorization: "Bearer " + token,
               "Content-Type": "application/json",
             },
+            
           } );
     
 
@@ -72,7 +73,7 @@ const Container = styled.div`
     overflow: auto;
   }
   
-  
+
 `;
 
 
