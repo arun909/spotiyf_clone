@@ -1,10 +1,10 @@
 import Playlists from "../components/Playlists";
 import { reducerCases } from "./Constants";
-
  export const initialState = {
      token: null,
      Playlists: [],
      userinfo: null,
+     selectedPlaylistId: "5GguA3kEZrVv6AtETirCQ9",
     };
 const reducer = (state, action) => {
     switch (action.type) {

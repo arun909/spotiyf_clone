@@ -14,7 +14,8 @@ export default function Spotify() {
   
     const getUserInfo = async () => {
           const {data}  = await axios.get(
-            "https://api.spotify.com/v1/me", { headers: {
+            "https://api.spotify.com/v1/me", {
+               headers: {
               Authorization: "Bearer " + token,
               "Content-Type": "application/json",
             },
@@ -27,7 +28,7 @@ export default function Spotify() {
       userName: data.display_name,
       
     };
-    console.log(userInfo);
+    
     dispatch({ type: reducerCases.SET_USER, userInfo });
   };
    getUserInfo();
