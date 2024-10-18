@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useStateProvider } from "../utils/StateProvider"; // Make sure to import useStateProvider
 import axios from "axios";
+import { reducerCases } from "../utils/Constants";
 
 export default function CurrentTrack() {
     const [{ token, currentlyPlaying}, dispatch] = useStateProvider();
@@ -24,16 +25,16 @@ export default function CurrentTrack() {
                     name: item.name,
                     artists: item.artists.map((artist) => artist.name),
                     image: item.album.images[2].url,
-                }
+                };
            
                 dispatch({ type: reducerCases.SET_PLAYING, currentlyPlaying });
-               
-        };
+            } 
+         };
 
         getCurrentTrack(); // Corrected function name call
     }, [token, dispatch]);
 
-    return 
+    return (
         <Container>
             {
                 currentlyPlaying && (
@@ -43,12 +44,35 @@ export default function CurrentTrack() {
                         </div>
                         <div className="track_info">
                             <h4>{currentlyPlaying.name}</h4>
-                            <h6>{currentlyPlaying.artist.join(", ")}</h6>
-                        
+                            <p>{currentlyPlaying.artists.join(", ")}</p>
                         </div>
                     </div>
                 )}
-        </Container>;
+        </Container>
+    );
 }
 
-const Container = styled.div``;
+const Container = styled.div`
+
+.track{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    .track__image{
+        img{
+            height: 5rem;
+        }
+    }
+    .track_info{
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        h4{
+            color: white;
+        }
+        p{
+            color: #b3b3b3;
+        }
+    }
+}
+`;
