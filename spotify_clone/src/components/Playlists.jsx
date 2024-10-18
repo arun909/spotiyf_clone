@@ -50,8 +50,8 @@ export default function Playlists() {
 }
 
 const Container = styled.div`
-  height: 100%;
-  overflow: hidden;
+  height: 100%; /* Full height */
+  overflow: visible; /* Allow overflow to be visible (not hidden) */
 
   ul {
     list-style-type: none;
@@ -59,9 +59,9 @@ const Container = styled.div`
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
-    height: 55vh;  /* Keeps the container height fixed */
+    height: 55vh;  /* Keeps the ul container height fixed */
     max-height: 100%;
-    overflow-y: auto;  /* Enables vertical scrollbar */
+    overflow-y: scroll; /* Enables vertical scrollbar when content overflows */
 
     li {
       display: flex;

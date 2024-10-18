@@ -68,7 +68,7 @@ const Container = styled.div`
     background: linear-gradient(transparent, rgba(0, 0, 0, 1));
     background-color: rgb(32, 87, 100);
   }
-  .bofy {
+  .body {
     height: 100%;
     width: 100%;
     overflow: auto;
