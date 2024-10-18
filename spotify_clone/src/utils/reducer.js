@@ -6,6 +6,7 @@ import { reducerCases } from "./Constants";
      userinfo: null,
      selectedPlaylistId: "5GguA3kEZrVv6AtETirCQ9",  
      selectedPlaylist: null,
+     currentlyPlaying: null,
     };
 const reducer = (state, action) => {
     switch (action.type) {
@@ -31,6 +32,12 @@ const reducer = (state, action) => {
             return {
                 ...state,
                 selectedPlaylist: action.selectedPlaylist,
+            };
+        }
+        case reducerCases.SET_PLAYING :{
+            return {
+                ...state,
+                currentlyPlaying: action.currentlyPlaying,
             };
         }
         default: 

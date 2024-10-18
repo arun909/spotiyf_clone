@@ -21,7 +21,7 @@ export default function Playlists() {
           return {
             name,
             id
-          };
+            };
         });
         dispatch({ type: reducerCases.SET_PLAYLISTS, playlists });
       } catch (error) {
