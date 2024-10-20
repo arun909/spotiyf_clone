@@ -9,3 +9,10 @@ export const StateProvider = ({children, initialState, reducer}) => (
 );
 
 export const useStateProvider = () => useContext(StateContext);
+
+
+
+
+
+
+
