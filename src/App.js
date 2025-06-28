@@ -1,24 +1,34 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Login from './components/Login';  
+import LoadingScreen from './components/LoadingScreen';
 import { useStateProvider } from './utils/StateProvider';
 import { reducerCases } from './utils/Constants';
 import Spotify from './components/Spotify';
 
 export default function App() {
-  // Call the useStateProvider hook correctly by adding parentheses
   const [{ token }, dispatch] = useStateProvider();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
+      setIsLoading(true);
       const token = hash.substring(1).split('&')[0].split('=')[1];
       console.log(token);
-      // Dispatch the token using the reducer
-      dispatch({ type: reducerCases.SET_TOKEN, token });
+      
+      // Simulate loading time for retro effect
+      setTimeout(() => {
+        dispatch({ type: reducerCases.SET_TOKEN, token });
+        setIsLoading(false);
+      }, 4000); // 4 second loading screen
     }
-  }, [token, dispatch]);
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
-    <div> {    token ? <Spotify /> : <Login />   } </div>
+    <div>{token ? <Spotify /> : <Login />}</div>
   );
 }
