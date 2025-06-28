@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React,{useEffect} from 'react';
 import styled from "styled-components";
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -9,60 +9,50 @@ import { reducerCases } from '../utils/Constants';
 import { useStateProvider } from '../utils/StateProvider';
 
 export default function Spotify() {
-  const [{ token }, dispatch] = useStateProvider();
-  const bodyRef = useRef();
-  const [navBackground, setNavBackground] = React.useState(false);
-  const [headerBackground, setHeaderBackground] = React.useState(false);
-
-  const bodyScrolled = () => {
-    bodyRef.current.scrollTop >= 30
-      ? setNavBackground(true)
-      : setNavBackground(false);
-    bodyRef.current.scrollTop >= 268
-      ? setHeaderBackground(true)
-      : setHeaderBackground(false);
-  };
-
+ const [{ token }, dispatch] = useStateProvider();
   useEffect(() => {
+  
     const getUserInfo = async () => {
       try {
-        const { data } = await axios.get(
-          "https://api.spotify.com/v1/me", {
-            headers: {
+          const {data}  = await axios.get(
+            "https://api.spotify.com/v1/me", {
+               headers: {
               Authorization: "Bearer " + token,
               "Content-Type": "application/json",
             },
-          }
-        );
+            
+          } );
+    
 
-        const userInfo = {
-          userId: data.id,
-          userName: data.display_name,
-        };
-
-        dispatch({ type: reducerCases.SET_USER, userInfo });
-      } catch (error) {
-        console.error("Error fetching user info:", error);
-      }
+    const userInfo = {
+      userId: data.id,
+      userName: data.display_name,
+      
     };
+    
+    dispatch({ type: reducerCases.SET_USER, userInfo });
+      } catch (error) {
+        console.log("Error getting user info:", error);
+      }
+  };
+   if (token) {
+     getUserInfo();
+   }
 
-    if (token) {
-      getUserInfo();
-    }
+
   }, [dispatch, token]);
-
   return (
     <Container>
-      <div className='spotify__body'>
+      <div className='spotify_body'>
         <Sidebar />
-        <div className='body' ref={bodyRef} onScroll={bodyScrolled}>
-          <Navbar navBackground={navBackground} />
-          <div className='body__contents'>
-            <Body headerBackground={headerBackground} />
+        <div className='body'>
+          <Navbar />
+          <div className='body_contents'>
+            <Body />
           </div>
         </div>
       </div>
-      <div className='spotify__footer'>
+      <div className='spotify_footer'>
         <Footer />
       </div>
     </Container>
@@ -75,7 +65,8 @@ const Container = styled.div`
   overflow: hidden;
   display: grid;
   grid-template-rows: 85vh 15vh;
-  .spotify__body {
+
+  .spotify_body {
     display: grid;
     grid-template-columns: 15vw 85vw;
     height: 100%;
@@ -87,12 +78,7 @@ const Container = styled.div`
     height: 100%;
     width: 100%;
     overflow: auto;
-    &::-webkit-scrollbar {
-      width: 0.7rem;
-      max-height: 2rem;
-      &-thumb {
-        background-color: rgba(255, 255, 255, 0.6);
-      }
-    }
   }
+  
+
 `;

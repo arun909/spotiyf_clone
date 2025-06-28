@@ -10,13 +10,12 @@ import { FiRepeat } from "react-icons/fi";
 import { useStateProvider } from "../utils/StateProvider";
 import axios from "axios";
 import { reducerCases } from "../utils/Constants";
-
 export default function PlayerControls() {
   const [{ token, playerState }, dispatch] = useStateProvider();
 
   const changeState = async () => {
+    const state = playerState ? "pause" : "play";
     try {
-      const state = playerState ? "pause" : "play";
       await axios.put(
         `https://api.spotify.com/v1/me/player/${state}`,
         {},
@@ -32,10 +31,9 @@ export default function PlayerControls() {
         playerState: !playerState,
       });
     } catch (error) {
-      console.error("Error changing player state:", error);
+      console.log("Error changing player state:", error);
     }
   };
-
   const changeTrack = async (type) => {
     try {
       await axios.post(
@@ -48,10 +46,8 @@ export default function PlayerControls() {
           },
         }
       );
-      
       dispatch({ type: reducerCases.SET_PLAYER_STATE, playerState: true });
-      
-      const response = await axios.get(
+      const response1 = await axios.get(
         "https://api.spotify.com/v1/me/player/currently-playing",
         {
           headers: {
@@ -60,23 +56,21 @@ export default function PlayerControls() {
           },
         }
       );
-      
-      if (response.data && response.data.item) {
-        const currentlyPlaying = {
-          id: response.data.item.id,
-          name: response.data.item.name,
-          artists: response.data.item.artists.map((artist) => artist.name),
-          image: response.data.item.album.images[2]?.url,
+      if (response1.data !== "") {
+        const currentPlaying = {
+          id: response1.data.item.id,
+          name: response1.data.item.name,
+          artists: response1.data.item.artists.map((artist) => artist.name),
+          image: response1.data.item.album.images[2].url,
         };
-        dispatch({ type: reducerCases.SET_PLAYING, currentlyPlaying });
+        dispatch({ type: reducerCases.SET_PLAYING, currentPlaying });
       } else {
-        dispatch({ type: reducerCases.SET_PLAYING, currentlyPlaying: null });
+        dispatch({ type: reducerCases.SET_PLAYING, currentPlaying: null });
       }
     } catch (error) {
-      console.error("Error changing track:", error);
+      console.log("Error changing track:", error);
     }
   };
-
   return (
     <Container>
       <div className="shuffle">
@@ -110,7 +104,6 @@ const Container = styled.div`
   svg {
     color: #b3b3b3;
     transition: 0.2s ease-in-out;
-    cursor: pointer;
     &:hover {
       color: white;
     }

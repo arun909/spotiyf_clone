@@ -7,6 +7,10 @@ import { reducerCases } from "../utils/Constants";
 export default function Playlists() {
   const [{ token, playlists }, dispatch] = useStateProvider();
 
+  const changeCurrentPlaylist = (selectedPlaylistId) => {
+    dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistId });
+  };
+
   useEffect(() => {
     const getPlaylistData = async () => {
       try {
@@ -21,7 +25,7 @@ export default function Playlists() {
           return {
             name,
             id
-          };
+            };
         });
         dispatch({ type: reducerCases.SET_PLAYLISTS, playlists });
       } catch (error) {
@@ -34,18 +38,12 @@ export default function Playlists() {
     }
   }, [token, dispatch]);
 
-  const changeCurrentPlaylist = (selectedPlaylistId) => {
-    dispatch({ type: reducerCases.SET_PLAYLIST_ID, selectedPlaylistId });
-  };
-
   return (
     <Container>
       <ul>
         {playlists && playlists.length > 0 ? (
           playlists.map(({ name, id }) => (
-            <li key={id} onClick={() => changeCurrentPlaylist(id)}>
-              {name}
-            </li>
+            <li key={id} onClick={() => changeCurrentPlaylist(id)}>{name}</li>
           ))
         ) : (
           <li>No playlists available</li>
@@ -56,9 +54,8 @@ export default function Playlists() {
 }
 
 const Container = styled.div`
-  color: #b3b3b3;
-  height: 100%;
-  overflow: hidden;
+  height: 100%; /* Full height */
+  overflow: visible; /* Allow overflow to be visible (not hidden) */
 
   ul {
     list-style-type: none;
@@ -66,22 +63,33 @@ const Container = styled.div`
     flex-direction: column;
     gap: 1rem;
     padding: 1rem;
-    height: 52vh;
+    height: 55vh;  /* Keeps the ul container height fixed */
     max-height: 100%;
-    overflow-y: auto;
+    overflow-y: scroll; /* Enables vertical scrollbar when content overflows */
 
     li {
-      transition: 0.3s ease-in-out;
+      display: flex;
+      gap: 1rem;
       cursor: pointer;
+      transition: 0.3s ease-in-out;
+
       &:hover {
         color: white;
       }
     }
-  }
-  &::-webkit-scrollbar {
-    width: 0.7rem;
-    &-thumb {
-      background-color: rgba(255, 255, 255, 0.6);
+
+    /* Custom scrollbar styles */
+    &::-webkit-scrollbar {
+      width: 8px; /* Width of the scrollbar */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.3); /* Color of the scrollbar thumb */
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: rgba(0, 0, 0, 0.1); /* Color of the scrollbar track */
     }
   }
 `;
